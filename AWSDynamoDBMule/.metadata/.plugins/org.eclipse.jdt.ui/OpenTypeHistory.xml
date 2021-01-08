@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=dynamo_db/C:\/Users\/Admin\/.m2\/repository\/com\/amazonaws\/aws-java-sdk-dynamodb\/1.11.816\/aws-java-sdk-dynamodb-1.11.816.jar&lt;com.amazonaws.services.dynamodbv2.datamodeling(DynamoDBAutoGenerator.class[DynamoDBAutoGenerator" modifiers="1537" timestamp="1604645378940"/>
+<typeInfo handle="=dynamo_db/C:\/Users\/Admin\/.m2\/repository\/com\/amazonaws\/aws-java-sdk-dynamodb\/1.11.816\/aws-java-sdk-dynamodb-1.11.816.jar&lt;com.amazonaws.services.dynamodbv2.datamodeling(DynamoDBTypeConverter.class[DynamoDBTypeConverter" modifiers="1537" timestamp="1604645378940"/>
+<typeInfo handle="=dynamo_db/C:\/Users\/Admin\/.m2\/repository\/com\/amazonaws\/aws-java-sdk-dynamodb\/1.11.816\/aws-java-sdk-dynamodb-1.11.816.jar&lt;com.amazonaws.services.dynamodbv2.datamodeling(DynamoDBMarshaller.class[DynamoDBMarshaller" modifiers="1050113" timestamp="1604645378940"/>
+<typeInfo handle="=dynamo_db/C:\/Users\/Admin\/.m2\/repository\/com\/amazonaws\/aws-java-sdk-dynamodb\/1.11.816\/aws-java-sdk-dynamodb-1.11.816.jar&lt;com.amazonaws.services.dynamodbv2.datamodeling(DynamoDBMapperModelFactory.class[DynamoDBMapperModelFactory" modifiers="1537" timestamp="1604645378940"/>
+<typeInfo handle="=dynamo_db/C:\/Users\/Admin\/.m2\/repository\/com\/amazonaws\/aws-java-sdk-dynamodb\/1.11.816\/aws-java-sdk-dynamodb-1.11.816.jar&lt;com.amazonaws.services.dynamodbv2.document(DynamoDB.class[DynamoDB" modifiers="33" timestamp="1604645378940"/>
+</typeInfoHistroy>

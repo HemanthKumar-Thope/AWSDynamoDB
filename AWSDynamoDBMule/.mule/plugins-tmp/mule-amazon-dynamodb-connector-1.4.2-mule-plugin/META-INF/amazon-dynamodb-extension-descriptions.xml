@@ -1,0 +1,1101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension-documentation>
+    <configs>
+        <config name="config">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="expirationPolicy">
+                    <description><![CDATA[Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit.]]></description>
+                </parameter>
+            </parameters>
+        </config>
+        <config name="streams-config">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="expirationPolicy">
+                    <description><![CDATA[Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit.]]></description>
+                </parameter>
+            </parameters>
+        </config>
+    </configs>
+    <connections>
+        <connection name="basic">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="sessionToken">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="connectionTimeout">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="maxConnections">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="socketTimeout">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="accessKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="secretKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tryDefaultAWSCredentialsProviderChain">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tlsContext">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="reconnection">
+                    <description><![CDATA[When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy]]></description>
+                </parameter>
+                <parameter name="proxyHost">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyPort">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyUsername">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyPassword">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyDomain">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyWorkstation">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </connection>
+        <connection name="role">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="roleARN">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="connectionTimeout">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="maxConnections">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="socketTimeout">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="accessKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="secretKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tryDefaultAWSCredentialsProviderChain">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tlsContext">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="reconnection">
+                    <description><![CDATA[When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy]]></description>
+                </parameter>
+                <parameter name="proxyHost">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyPort">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyUsername">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyPassword">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyDomain">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyWorkstation">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </connection>
+        <connection name="streams">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="sessionToken">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="connectionTimeout">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="maxConnections">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="socketTimeout">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="accessKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="secretKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tryDefaultAWSCredentialsProviderChain">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="region">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tlsContext">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="reconnection">
+                    <description><![CDATA[When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy]]></description>
+                </parameter>
+                <parameter name="proxyHost">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyPort">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyUsername">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyPassword">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyDomain">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="proxyWorkstation">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </connection>
+    </connections>
+    <extension name="Amazon DynamoDB">
+        <description><![CDATA[]]></description>
+        <parameters/>
+    </extension>
+    <operations>
+        <operation name="batchDeleteItem">
+            <description><![CDATA[The BatchDeleteItem operation deletes multiple items in one or more tables.]]></description>
+            <parameters>
+                <parameter name="requestDeleteItems">
+                    <description><![CDATA[One or more items to delete from the table.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="batchGetItem">
+            <description><![CDATA[The BatchGetItem operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.]]></description>
+            <parameters>
+                <parameter name="requestItems">
+                    <description><![CDATA[A map of one or more table names and, for each table, a map that describes one or more items to retrieve from that table.]]></description>
+                </parameter>
+                <parameter name="returnConsumedCapacity">
+                    <description><![CDATA[Determines the level of detail about provisioned throughput consumption that is returned in the response.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="batchPutItem">
+            <description><![CDATA[The BatchPutItem operation puts multiple items in one or more tables.]]></description>
+            <parameters>
+                <parameter name="requestPutItems">
+                    <description><![CDATA[One or more items to insert into table.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="createTable">
+            <description><![CDATA[The CreateTable operation adds a new table to your account. In an AWS account, table names must be unique within each region.]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[The name of the table to create.]]></description>
+                </parameter>
+                <parameter name="attributeDefinitions">
+                    <description><![CDATA[An array of attributes that describe the key schema for the table and indexes.]]></description>
+                </parameter>
+                <parameter name="keySchemas">
+                    <description><![CDATA[Specifies the attributes that make up the primary key for a table or an index.]]></description>
+                </parameter>
+                <parameter name="readCapacityUnits">
+                    <description><![CDATA[The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException.]]></description>
+                </parameter>
+                <parameter name="writeCapacityUnits">
+                    <description><![CDATA[The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException.]]></description>
+                </parameter>
+                <parameter name="globalSecondaryIndexes">
+                    <description><![CDATA[One or more global secondary indexes (the maximum is five) to be created on the table.]]></description>
+                </parameter>
+                <parameter name="localSecondaryIndexes">
+                    <description><![CDATA[One or more local secondary indexes (the maximum is five) to be created on the table.]]></description>
+                </parameter>
+                <parameter name="streamViewType">
+                    <description><![CDATA[When an item in the table is modified, StreamViewType determines what information is written to the table's stream.]]></description>
+                </parameter>
+                <parameter name="streamEnabled">
+                    <description><![CDATA[Indicates whether to enable Streams (true) or disable Streams (false).]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="deleteItem">
+            <description><![CDATA[Deletes a single item in a table by primary key.]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[Table name.]]></description>
+                </parameter>
+                <parameter name="primarykey">
+                    <description><![CDATA[Primary key name and value map.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="deleteTable">
+            <description><![CDATA[The DeleteTable operation deletes a table and all of its items.]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[The name of the table to delete.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="describeTable">
+            <description><![CDATA[Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[The name of the table to describe.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="getItem">
+            <description><![CDATA[The GetItem operation returns a set of attributes for the item with the given primary key.]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[The name of the table containing the requested item.]]></description>
+                </parameter>
+                <parameter name="key">
+                    <description><![CDATA[A map of attribute names to AttributeValue objects, representing the primary key of the item to retrieve.]]></description>
+                </parameter>
+                <parameter name="attributesToGets">
+                    <description><![CDATA[This is a legacy parameter. Use ProjectionExpression instead.]]></description>
+                </parameter>
+                <parameter name="consistentRead">
+                    <description><![CDATA[Determines the read consistency model: If set to true, then the operation uses strongly consistent reads; otherwise, the operation uses eventually consistent reads.]]></description>
+                </parameter>
+                <parameter name="expressionAttributeNames">
+                    <description><![CDATA[One or more substitution tokens for attribute names in an expression. The following are some use cases for using ExpressionAttributeNames:]]></description>
+                </parameter>
+                <parameter name="projectionExpression">
+                    <description><![CDATA[A string that identifies one or more attributes to retrieve from the table.]]></description>
+                </parameter>
+                <parameter name="returnConsumedCapacity">
+                    <description><![CDATA[Determines the level of detail about provisioned throughput consumption returned in the response.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="listTables">
+            <description><![CDATA[Returns an array of table names associated with the current account and endpoint.]]></description>
+            <parameters>
+                <parameter name="exclusiveStartTableName">
+                    <description><![CDATA[The first table name that this operation will evaluate. Use the value that was returned for LastEvaluatedTableName in a previous operation.]]></description>
+                </parameter>
+                <parameter name="limit">
+                    <description><![CDATA[A maximum number of table names to return. If this parameter is not specified, the limit is 100.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="putItem">
+            <description><![CDATA[Creates a new item, or replaces an old item with a new item. If an item that has the same primary key as the new item already exists in the specified table, the new item replaces the existing item.]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[Table name.]]></description>
+                </parameter>
+                <parameter name="item">
+                    <description><![CDATA[Item to be inserted.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="query">
+            <description><![CDATA[The Query operation finds items based on primary key values. You can query any table or secondary index that has a composite primary key (a partition key and a sort key).]]></description>
+            <parameters>
+                <parameter name="keyConditionExpression">
+                    <description><![CDATA[The condition that specifies the key values for items to be retrieved by the Query action.]]></description>
+                </parameter>
+                <parameter name="keyConditions">
+                    <description><![CDATA[This is a legacy parameter. Use KeyConditionExpression instead.]]></description>
+                </parameter>
+                <parameter name="scanIndexForward">
+                    <description><![CDATA[Specifies the order for index traversal: If true (default), the traversal is performed in ascending order; if false, the traversal is performed in descending order.]]></description>
+                </parameter>
+                <parameter name="select">
+                    <description><![CDATA[The attributes to be returned in the result.]]></description>
+                </parameter>
+                <parameter name="attributeNames">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="attributeValues">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tableName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="attributesToGets">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="conditionalOperator">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="consistentRead">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exclusiveStartKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="filterExpression">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="indexName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="limit">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="projectionExpression">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="conditionFilter">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="returnConsumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="scan">
+            <description><![CDATA[The Scan operation returns one or more items and item attributes by accessing every item in a table or secondary index. To have DynamoDB return fewer items, you can provide a FilterExpression operation.]]></description>
+            <parameters>
+                <parameter name="segment">
+                    <description><![CDATA[For a parallel Scan request, Segment identifies an individual segment to be scanned by an application worker.]]></description>
+                </parameter>
+                <parameter name="select">
+                    <description><![CDATA[The attributes to be returned in the result.]]></description>
+                </parameter>
+                <parameter name="totalSegments">
+                    <description><![CDATA[For a parallel Scan request, TotalSegments represents the total number of segments into which the Scan operation is divided.]]></description>
+                </parameter>
+                <parameter name="attributeNames">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="attributeValues">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tableName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="attributesToGets">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="conditionalOperator">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="consistentRead">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exclusiveStartKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="filterExpression">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="indexName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="limit">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="projectionExpression">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="conditionFilter">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="returnConsumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="updateItem">
+            <description><![CDATA[Edits an existing item's attributes, or adds a new item to the table if it does not already exist.]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[Table name.]]></description>
+                </parameter>
+                <parameter name="key">
+                    <description><![CDATA[Primary key.]]></description>
+                </parameter>
+                <parameter name="returnConsumedCapacity">
+                    <description><![CDATA[Determines the level of detail about provisioned throughput consumption that is returned in the response.]]></description>
+                </parameter>
+                <parameter name="returnItemCollectionMetrics">
+                    <description><![CDATA[Determines whether item collection metrics are returned.]]></description>
+                </parameter>
+                <parameter name="returnValues">
+                    <description><![CDATA[Use if you want to get the item attributes as they appear before or after they are updated.]]></description>
+                </parameter>
+                <parameter name="updateExpression">
+                    <description><![CDATA[An expression that defines one or more attributes to be updated, the action to be performed on them, and new value(s) for them.]]></description>
+                </parameter>
+                <parameter name="attributeUpdates">
+                    <description><![CDATA[This is a legacy parameter. Use updateExpression instead.]]></description>
+                </parameter>
+                <parameter name="expected">
+                    <description><![CDATA[This is a legacy parameter. Use conditionExpression instead.]]></description>
+                </parameter>
+                <parameter name="conditionalOperator">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="conditionExpression">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="attributeNames">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="attributeValues">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="updateTable">
+            <description><![CDATA[Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[The name of the table to update.]]></description>
+                </parameter>
+                <parameter name="attributeDefinitions">
+                    <description><![CDATA[An array of attributes that describe the key schema for the table and indexes. If you are adding a new global secondary index to the table, AttributeDefinitions must include the key elements of the new index.]]></description>
+                </parameter>
+                <parameter name="readCapacityUnits">
+                    <description><![CDATA[The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException.]]></description>
+                </parameter>
+                <parameter name="writeCapacityUnits">
+                    <description><![CDATA[The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException.]]></description>
+                </parameter>
+                <parameter name="globalSecondaryIndexUpdates">
+                    <description><![CDATA[An array of one or more global secondary indexes for the table.]]></description>
+                </parameter>
+                <parameter name="streamViewType">
+                    <description><![CDATA[When an item in the table is modified, StreamViewType determines what information is written to the stream for this table.]]></description>
+                </parameter>
+                <parameter name="streamEnabled">
+                    <description><![CDATA[Indicates whether DynamoDB Streams is enabled (true) or disabled (false) on the table.]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="describeStream">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="streamARN">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="getRecords">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="shardIterator">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="streamingStrategy">
+                    <description><![CDATA[Configure if repeatable streams should be used and their behaviour]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="getShardIterator">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="shardId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="shardIteratorType">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="startingSequenceNumber">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="streamARN">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+        <operation name="listStreams">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="tableName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="streamingStrategy">
+                    <description><![CDATA[Configure if repeatable streams should be used and their behaviour]]></description>
+                </parameter>
+                <parameter name="target">
+                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
+                </parameter>
+                <parameter name="targetValue">
+                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
+                </parameter>
+                <parameter name="reconnectionStrategy">
+                    <description><![CDATA[A retry strategy in case of connectivity errors]]></description>
+                </parameter>
+            </parameters>
+        </operation>
+    </operations>
+    <sources/>
+    <types>
+        <type name="org.mule.extension.dynamodb.api.attributes.RequestIDAttribute">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="requestId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.AttributeDefinition">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributeName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="attributeType">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.AttributeValue">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="b">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="bool">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="bs">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="l">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="m">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="n">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="ns">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="nullvalue">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="s">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="ss">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.AttributeValueUpdate">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="action">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="value">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.BatchGetItemResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="consumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="responses">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="unprocessedKeys">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.BatchWriteItemResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="consumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="itemCollectionMetrics">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="unprocessedItems">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.Condition">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributeValueList">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="comparisonOperator">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.DeleteItemResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributes">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="consumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="itemCollectionMetrics">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.ExpectedAttributeValue">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributeValueList">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="comparisonOperator">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="exists">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="value">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.GetItemResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="consumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="item">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.GlobalSecondaryIndex">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="indexName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="keySchema">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="projection">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="provisionedThroughput">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.GlobalSecondaryIndexUpdate">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="create">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="delete">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="update">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.KeySchemaElement">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributeName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="keyType">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.KeysAndAttributes">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributesToGet">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="consistentRead">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="expressionAttributeNames">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="keys">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="projectionExpression">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.ListTablesResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="lastEvaluatedTableName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tableNames">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.LocalSecondaryIndex">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="indexName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="keySchema">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="projection">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.PutItemResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributes">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="consumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="itemCollectionMetrics">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.QueryResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="consumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="count">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="items">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="lastEvaluatedKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="scannedCount">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.ScanResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="consumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="count">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="items">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="lastEvaluatedKey">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="scannedCount">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.StreamDescription">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="creationRequestDateTime">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="keySchema">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="lastEvaluatedShardId">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="shards">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="streamArn">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="streamLabel">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="streamStatus">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="streamViewType">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tableName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.TableDescription">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributeDefinitions">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="creationDateTime">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="globalSecondaryIndexes">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="itemCount">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="keySchema">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="latestStreamArn">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="latestStreamLabel">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="localSecondaryIndexes">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="provisionedThroughput">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="streamSpecification">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tableArn">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tableName">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tableSizeBytes">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="tableStatus">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.UpdateItemResult">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="attributes">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="consumedCapacity">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="itemCollectionMetrics">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+        <type name="org.mule.extension.dynamodb.api.model.WriteRequest">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="deleteRequest">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="putRequest">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+    </types>
+</extension-documentation>

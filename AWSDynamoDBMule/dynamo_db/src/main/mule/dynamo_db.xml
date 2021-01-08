@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:s3="http://www.mulesoft.org/schema/mule/s3"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/dynamodb http://www.mulesoft.org/schema/mule/dynamodb/current/mule-dynamodb.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd">
+	<dynamodb:config name="Amazon_DynamoDB_Configuration" doc:name="Amazon DynamoDB Configuration" doc:id="a848faf7-48fa-48c6-bf54-6929fc38349c" >
+		<dynamodb:basic-connection accessKey='AKIAZJ3IOFBW2JFOUJWA' secretKey='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'/>
+	</dynamodb:config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="ae9cf216-cd5a-4396-b7f0-f0d53bee1d19" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="f6496bcf-f3e1-4977-86ef-16d2df63f9e5" file="config.properties" />
+	<s3:config name="Amazon_S3_Configuration" doc:name="Amazon S3 Configuration" doc:id="730626cb-3420-4293-a67f-164a5ec1f87d" >
+		<s3:basic-connection accessKey="AKIAZJ3IOFBW2JFOUJWA" secretKey="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" />
+	</s3:config>
+	<flow name="CreatingTable" doc:id="1672b8bc-afd5-44f2-a7c1-db37f286b8bb" >
+		<http:listener doc:name="Listener" doc:id="09aad8f5-7571-44ae-83a5-f891939181f1" config-ref="HTTP_Listener_config" path="/dynamo"/>
+		<set-variable value="#[attributes.queryParams.tableName]" doc:name="Set Variable" doc:id="8ed778ae-e17c-4eda-a50e-8696de5c97b4" variableName="TableName"/>
+		<dynamodb:create-table doc:name="Create table" doc:id="03f69669-65c7-4515-9469-e4273bdf8394" config-ref="Amazon_DynamoDB_Configuration" tableName="#[vars.TableName]" readCapacityUnits="1" writeCapacityUnits="1">
+			<dynamodb:attribute-definitions >
+				<dynamodb:attribute-definition attributeName="Artist" attributeType="STRING" />
+				<dynamodb:attribute-definition attributeName="SongTitle" attributeType="STRING" />
+			</dynamodb:attribute-definitions>
+			<dynamodb:key-schemas >
+				<dynamodb:key-schema-element attributeName="Artist" keyType="HASH" />
+				<dynamodb:key-schema-element attributeName="SongTitle" keyType="RANGE" />
+			</dynamodb:key-schemas>
+		</dynamodb:create-table>
+		<dynamodb:describe-table doc:name="Describe table" doc:id="08995402-f94b-4260-9397-266040edea91" config-ref="Amazon_DynamoDB_Configuration" tableName="#[vars.TableName]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="8bb671cd-0c61-4fb5-9c99-4d1741344fb6" message="#[payload]"/>
+	</flow>
+	<flow name="S3=Dynamo" doc:id="b3a6f513-baf6-47b2-8652-e6ea801f0285" >
+		<http:listener doc:name="Listener" doc:id="687c2624-8ff8-4810-8194-551e083972c0" config-ref="HTTP_Listener_config" path="/aws"/>
+		<s3:get-object doc:name="Get object" doc:id="5a084047-e5ac-4d00-9c4b-6b01bdc1d654" config-ref="Amazon_S3_Configuration" bucketName="hemanaws" key="ProductCatalog.json"/>
+		<ee:transform doc:name="Transform Message" doc:id="e6e0a4dc-5f29-4991-bfff-d7d0c3d0a114" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<set-variable value='#["https://" ++ attributes.bucketName ++ ".s3.amazonaws.com/" ++ attributes.key]' doc:name="Set Variable" doc:id="4d3b78df-b08c-47b9-8447-89ceddbe211f" variableName="ObjectUrl"/>
+		<set-payload value="#[vars.ObjectUrl]" doc:name="Set Payload" doc:id="6aee5e37-0319-4e21-afa4-8e5900170911" />
+		<flow-ref doc:name="Flow Reference" doc:id="10681091-c6d7-47da-8dda-2df260926a34" name="InsertItems"/>
+		<logger level="INFO" doc:name="Logger" doc:id="1ec13932-32cc-4df1-af34-6afd69378fee" message='#[vars.Edits2]'/>
+	</flow>
+	<flow name="InsertItems" doc:id="6a80d8ed-7ffb-4c8a-b1a8-c2a1307a6536" >
+		<dynamodb:put-item doc:name="Put item" doc:id="b198ebf9-658e-4c08-8c9a-12cde89aa2fe" config-ref="Amazon_DynamoDB_Configuration" tableName="Issues" target="Edits">
+			<dynamodb:item ><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+  "IssueId":{"S": "ProductCatalog"},
+  "Title":{"S": payload as String}
+}]]]></dynamodb:item>
+		</dynamodb:put-item>
+		<logger level="INFO" doc:name="Logger" doc:id="82348555-dd81-41ec-ab16-d8ad0909d981" message='#[vars.Edits]'/>
+		<dynamodb:describe-table doc:name="Describe table" doc:id="4b093538-b9e2-443e-aac5-65501860820a" config-ref="Amazon_DynamoDB_Configuration" target="Edits2" tableName="Issues"/>
+	</flow>
+	<flow name="GetItemsFromDDBInTurnFromS3" doc:id="d33f5c4c-ff8c-436e-9072-07886e409a09" >
+		<http:listener doc:name="Listener" doc:id="ce99d162-86a5-4f67-9807-4188c469eda6" config-ref="HTTP_Listener_config" path="/getItem" allowedMethods="GET"/>
+		<dynamodb:get-item doc:name="Get item" doc:id="136eebba-ecd8-4272-b8b7-8203da5ae82a" config-ref="Amazon_DynamoDB_Configuration" tableName="Issues">
+			<dynamodb:key ><![CDATA[#[{"IssueId":{"S": "2020_11_11_17_06_59_670"}}]]]></dynamodb:key>
+		</dynamodb:get-item>
+		<ee:transform doc:name="Transform Message" doc:id="649a1f80-eddc-44a1-a9dc-01fa9ba3d15a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+readUrl(payload.item.Title.s)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="d6345228-4de0-49c6-b7ea-2640c83925fc" message='"Fetched the records in S3 Object Link"'/>
+	</flow>
+	<flow name="CreatingAnS3ObjectBasedOnPostItemsInDDBandS3" doc:id="573d52f3-668f-46fe-9ad0-9338a1a7c3f8" >
+		<s3:create-object doc:name="Create object" doc:id="1e59f3ea-b469-4a7b-b8ee-c1873fd59fb6" config-ref="Amazon_S3_Configuration" bucketName="hemanaws" key='#["POSTED on " ++ (now() as String {format: "yyyy_MM_dd_HH_mm_ss_SSS"})]'/>
+		<logger level="INFO" doc:name="Logger" doc:id="b232fa96-333a-4cdc-9e7c-e5db04551640" />
+	</flow>
+	<flow name="PostItemsInDDBandS3" doc:id="148ecc5a-c580-43f1-a318-b7837c7879c0" >
+		<http:listener doc:name="Listener" doc:id="171e6ada-fd00-44b6-86d1-6a2dd99eb830" config-ref="HTTP_Listener_config" path="/putItem"/>
+		<flow-ref doc:name="Flow Reference" doc:id="d675a2fa-95a2-40b5-b413-a829f070a690" name="InsertItems"/>
+		<flow-ref doc:name="Flow Reference" doc:id="e849a13a-a77d-482b-a624-de922f911ffb" name="CreatingAnS3ObjectBasedOnPostItemsInDDBandS3"/>
+		<logger level="INFO" doc:name="Logger" doc:id="410a3619-91f9-4c12-ae0c-20e4cb537679" />
+	</flow>
+	<flow name="dynamo_dbFlow" doc:id="9f378a46-8368-4cf9-9a5d-0842dd065a97" >
+		<http:listener doc:name="Listener" doc:id="b6a37848-9e03-49e3-b0e9-6a098f78a3c1" config-ref="HTTP_Listener_config" path="/deleteItem" allowedMethods="DELETE"/>
+		<set-variable value="#[attributes.queryParams.keyName as String]" doc:name="Set Variable" doc:id="7c65c812-035e-4c9c-b225-948d0e1f7f28" variableName="keyName"/>
+		<try doc:name="Try" doc:id="09ea56b7-bec2-423c-ae5f-fbb159f1dd60" >
+			<flow-ref doc:name="GetTheItemsInDB(KIND OF CHECK)" doc:id="8cb7a67b-0a80-4e22-aa6e-527cd992b2e5" name="dynamo_dbFlow1"/>
+			<choice doc:name="Check if the item is there" doc:id="3d22d8a3-f1df-46d2-a919-8527a5bcc614" >
+				<when expression="#[payload==true]">
+					<s3:delete-object doc:name="Delete object" doc:id="ccdb40a6-52c6-41fd-824a-da794cca9cc1" config-ref="Amazon_S3_Configuration" bucketName="hemanaws" key='#[vars.keyName ++".json"]' />
+					<logger level="INFO" doc:name="Logger" doc:id="2299f913-7446-494d-9a82-80f3b7655cb0" message='"Deleted from S3'/>
+					<dynamodb:delete-item doc:name="Delete item" doc:id="15c2f05c-fb46-4b70-9af4-5175f6a13899" config-ref="Amazon_DynamoDB_Configuration" tableName="Issues">
+						<dynamodb:primarykey ><![CDATA[#[{"IssueId":{"S": vars.keyName}}]]]></dynamodb:primarykey>
+					</dynamodb:delete-item>
+					<logger level="INFO" doc:name="Logger" doc:id="f03ff35e-6f61-4f96-b6e6-45308b84f3d7" message="Deleted from DDB"/>
+				</when>
+				<otherwise >
+					<logger level="INFO" doc:name="Logger" doc:id="9d98cbc1-b247-4cf3-9be0-b4043cffe9e9" message='"Something is Messy"'/>
+				</otherwise>
+			</choice>
+			<ee:transform doc:name="Transform Message" doc:id="03ae810d-6feb-4965-b556-ff914ba0b6cf" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<logger level="INFO" doc:name="Logger" doc:id="949b4525-2003-48a5-9632-9b211da224f6" message='"Item Deleted from S3 and DDB'/>
+			<set-payload value='#["DeletedFromS3AndDDB"]' doc:name="Set Payload" doc:id="b30480cd-c400-4d76-a7ec-dcc698dc346f" />
+		</try>
+	</flow>
+	<flow name="dynamo_dbFlow1" doc:id="ae4ece62-4986-40a2-ac4f-c03c5d66ef68" >
+		<dynamodb:get-item doc:name="Get item" doc:id="d71f9675-5c0e-4629-9221-6e5e64e7a116" config-ref="Amazon_DynamoDB_Configuration" tableName="Issues">
+			<dynamodb:key ><![CDATA[#[{"IssueId":{"S": vars.keyName}}]]]></dynamodb:key>
+		</dynamodb:get-item>
+		<ee:transform doc:name="Transform Message" doc:id="70b4275a-9098-4e3d-842f-bea53731b64b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+if (payload.item != null)
+	true
+else
+	false]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="05f0ec75-6d2f-4ee9-84e2-f00a0d2a61c4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="28144d94-18b4-4bcf-b648-3b3fbd4d73a5"/>
+	</flow>
+</mule>

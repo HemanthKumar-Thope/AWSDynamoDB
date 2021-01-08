@@ -1,0 +1,5 @@
+authenticated.users=[{"id"\:"66f82a9e-2c22-454a-8979-d8a3a47be00c","token"\:"4187c81f-95d5-49fb-8f07-9fcf9afa7de6","userId"\:"Hemant__666","email"\:"hpeddameti@eniquesolutions.com","refreshToken"\:"","baseUrl"\:"https\://anypoint.mulesoft.com/","org"\:{"name"\:"Enique Solutions","id"\:"40024df1-1b74-4590-a97a-5f99a333b372","isMaster"\:true}}]
+current.token=4187c81f-95d5-49fb-8f07-9fcf9afa7de6
+current.user=Hemant__666
+eclipse.preferences.version=1
+org.mule.tooling.ui.properties.enable.api.dependencies=true

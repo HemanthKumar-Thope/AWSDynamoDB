@@ -1,0 +1,1867 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/dynamodb" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
+  <xs:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans.xsd"></xs:import>
+  <xs:import namespace="http://www.mulesoft.org/schema/mule/core" schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></xs:import>
+  <xs:import namespace="http://www.mulesoft.org/schema/mule/tls" schemaLocation="http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd"></xs:import>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstract-shared-extension" name="config">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractExtensionType">
+          <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="1" maxOccurs="1" ref="mule:abstractConnectionProvider"></xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" ref="mule:expiration-policy"></xs:element>
+          </xs:sequence>
+          <xs:attribute type="xs:string" use="required" name="name">
+            <xs:annotation>
+              <xs:documentation>The identifier of this element used to reference it in other components</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstractConnectionProvider" name="basic-connection">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractConnectionProviderType">
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" ref="mule:reconnection"></xs:element>
+            <xs:element xmlns:tls="http://www.mulesoft.org/schema/mule/tls" minOccurs="0" maxOccurs="1" ref="tls:context"></xs:element>
+          </xs:sequence>
+          <xs:attribute type="xs:string" use="optional" name="tlsContext"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="sessionToken"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" default="50000" name="connectionTimeout"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" name="maxConnections"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" default="50000" name="socketTimeout"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="required" name="accessKey"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="required" name="secretKey"></xs:attribute>
+          <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="tryDefaultAWSCredentialsProviderChain"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" default="US_EAST_1" name="region"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyHost"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" name="proxyPort"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyUsername"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyPassword"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyDomain"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyWorkstation"></xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstractConnectionProvider" name="role-connection">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractConnectionProviderType">
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" ref="mule:reconnection"></xs:element>
+            <xs:element xmlns:tls="http://www.mulesoft.org/schema/mule/tls" minOccurs="0" maxOccurs="1" ref="tls:context"></xs:element>
+          </xs:sequence>
+          <xs:attribute type="xs:string" use="optional" name="tlsContext"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="required" name="roleARN"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" default="50000" name="connectionTimeout"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" name="maxConnections"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" default="50000" name="socketTimeout"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="required" name="accessKey"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="required" name="secretKey"></xs:attribute>
+          <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="tryDefaultAWSCredentialsProviderChain"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" default="US_EAST_1" name="region"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyHost"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" name="proxyPort"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyUsername"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyPassword"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyDomain"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyWorkstation"></xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="BatchDeleteItemType" substitutionGroup="mule:abstract-operator" name="batch-delete-item">
+    <xs:annotation>
+      <xs:documentation>The BatchDeleteItem operation deletes multiple items in one or more tables.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BatchDeleteItemType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="request-delete-items">
+            <xs:annotation>
+              <xs:documentation>One or more items to delete from the table.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="request-delete-item">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" maxOccurs="unbounded" name="write-request">
+                        <xs:complexType>
+                          <xs:attribute type="xs:string" use="required" name="value"></xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="mule:expressionList" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionMap" use="optional" name="requestDeleteItems">
+          <xs:annotation>
+            <xs:documentation>One or more items to delete from the table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="BatchGetItemType" substitutionGroup="mule:abstract-operator" name="batch-get-item">
+    <xs:annotation>
+      <xs:documentation>The BatchGetItem operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BatchGetItemType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="request-items">
+            <xs:annotation>
+              <xs:documentation>A map of one or more table names and, for each table, a map that describes one or more items to retrieve from that table.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="request-item">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-keys-and-attributes"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionMap" use="optional" name="requestItems">
+          <xs:annotation>
+            <xs:documentation>A map of one or more table names and, for each table, a map that describes one or more items to retrieve from that table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ReturnConsumedCapacityEnumType" use="optional" name="returnConsumedCapacity">
+          <xs:annotation>
+            <xs:documentation>Determines the level of detail about provisioned throughput consumption that is returned in the response.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.KeysAndAttributes">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="attributes-to-get">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attributes-to-get-item">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="expression-attribute-names">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="expression-attribute-name">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionList" use="optional" name="attributesToGet"></xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" name="consistentRead"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="expressionAttributeNames"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="keys"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="projectionExpression"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.KeysAndAttributes" abstract="true" name="abstract-keys-and-attributes"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-keys-and-attributes" name="keys-and-attributes">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.KeysAndAttributes"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="BatchPutItemType" substitutionGroup="mule:abstract-operator" name="batch-put-item">
+    <xs:annotation>
+      <xs:documentation>The BatchPutItem operation puts multiple items in one or more tables.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BatchPutItemType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="request-put-items">
+            <xs:annotation>
+              <xs:documentation>One or more items to insert into table.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="request-put-item">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" maxOccurs="unbounded" name="write-request">
+                        <xs:complexType>
+                          <xs:attribute type="xs:string" use="required" name="value"></xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="mule:expressionList" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionMap" use="optional" name="requestPutItems">
+          <xs:annotation>
+            <xs:documentation>One or more items to insert into table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="CreateTableType" substitutionGroup="mule:abstract-operator" name="create-table">
+    <xs:annotation>
+      <xs:documentation>The CreateTable operation adds a new table to your account. In an AWS account, table names must be unique within each region.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateTableType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-definitions">
+            <xs:annotation>
+              <xs:documentation>An array of attributes that describe the key schema for the table and indexes.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-attribute-definition"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="key-schemas">
+            <xs:annotation>
+              <xs:documentation>Specifies the attributes that make up the primary key for a table or an index.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-key-schema-element"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="global-secondary-indexes">
+            <xs:annotation>
+              <xs:documentation>One or more global secondary indexes (the maximum is five) to be created on the table.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-global-secondary-index"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="local-secondary-indexes">
+            <xs:annotation>
+              <xs:documentation>One or more local secondary indexes (the maximum is five) to be created on the table.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-local-secondary-index"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName">
+          <xs:annotation>
+            <xs:documentation>The name of the table to create.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="attributeDefinitions">
+          <xs:annotation>
+            <xs:documentation>An array of attributes that describe the key schema for the table and indexes.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="keySchemas">
+          <xs:annotation>
+            <xs:documentation>Specifies the attributes that make up the primary key for a table or an index.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionLong" use="required" name="readCapacityUnits">
+          <xs:annotation>
+            <xs:documentation>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionLong" use="required" name="writeCapacityUnits">
+          <xs:annotation>
+            <xs:documentation>The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="globalSecondaryIndexes">
+          <xs:annotation>
+            <xs:documentation>One or more global secondary indexes (the maximum is five) to be created on the table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="localSecondaryIndexes">
+          <xs:annotation>
+            <xs:documentation>One or more local secondary indexes (the maximum is five) to be created on the table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.StreamViewTypeEnumType" use="optional" name="streamViewType">
+          <xs:annotation>
+            <xs:documentation>When an item in the table is modified, StreamViewType determines what information is written to the table's stream.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="streamEnabled">
+          <xs:annotation>
+            <xs:documentation>Indicates whether to enable Streams (true) or disable Streams (false).</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.AttributeDefinition">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:attribute type="mule:expressionString" use="optional" name="attributeName"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ScalarAttributeTypeEnumType" use="optional" name="attributeType"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.AttributeDefinition" abstract="true" name="abstract-attribute-definition"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-attribute-definition" name="attribute-definition">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.AttributeDefinition"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.KeySchemaElement">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:attribute type="mule:expressionString" use="optional" name="attributeName"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.KeyTypeEnumType" use="optional" name="keyType"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.KeySchemaElement" abstract="true" name="abstract-key-schema-element"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-key-schema-element" name="key-schema-element">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.KeySchemaElement"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.Projection">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="non-key-attributes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="non-key-attribute">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionList" use="optional" name="nonKeyAttributes"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ProjectionTypeEnumType" use="optional" name="projectionType"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.ProvisionedThroughput">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:attribute type="mule:expressionLong" use="optional" name="readCapacityUnits"></xs:attribute>
+        <xs:attribute type="mule:expressionLong" use="optional" name="writeCapacityUnits"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.GlobalSecondaryIndex">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="key-schema">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-key-schema-element"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="projection">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.Projection"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="provisioned-throughput">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.ProvisionedThroughput"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="optional" name="indexName"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="keySchema"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="projection"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="provisionedThroughput"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.GlobalSecondaryIndex" abstract="true" name="abstract-global-secondary-index"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-global-secondary-index" name="global-secondary-index">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.GlobalSecondaryIndex"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.LocalSecondaryIndex">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="key-schema">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-key-schema-element"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="projection">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.Projection"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="optional" name="indexName"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="keySchema"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="projection"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.LocalSecondaryIndex" abstract="true" name="abstract-local-secondary-index"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-local-secondary-index" name="local-secondary-index">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.LocalSecondaryIndex"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="DeleteItemType" substitutionGroup="mule:abstract-operator" name="delete-item">
+    <xs:annotation>
+      <xs:documentation>Deletes a single item in a table by primary key.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteItemType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element type="xs:string" minOccurs="0" maxOccurs="1" name="primarykey">
+            <xs:annotation>
+              <xs:documentation>Primary key name and value map.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName">
+          <xs:annotation>
+            <xs:documentation>Table name.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="DeleteTableType" substitutionGroup="mule:abstract-operator" name="delete-table">
+    <xs:annotation>
+      <xs:documentation>The DeleteTable operation deletes a table and all of its items.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteTableType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName">
+          <xs:annotation>
+            <xs:documentation>The name of the table to delete.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="DescribeTableType" substitutionGroup="mule:abstract-operator" name="describe-table">
+    <xs:annotation>
+      <xs:documentation>Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DescribeTableType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName">
+          <xs:annotation>
+            <xs:documentation>The name of the table to describe.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetItemType" substitutionGroup="mule:abstract-operator" name="get-item">
+    <xs:annotation>
+      <xs:documentation>The GetItem operation returns a set of attributes for the item with the given primary key.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetItemType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element type="xs:string" minOccurs="0" maxOccurs="1" name="key">
+            <xs:annotation>
+              <xs:documentation>A map of attribute names to AttributeValue objects, representing the primary key of the item to retrieve.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attributes-to-gets">
+            <xs:annotation>
+              <xs:documentation>This is a legacy parameter. Use ProjectionExpression instead.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attributes-to-get">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="expression-attribute-names">
+            <xs:annotation>
+              <xs:documentation>One or more substitution tokens for attribute names in an expression. The following are some use cases for using ExpressionAttributeNames:</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="expression-attribute-name">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName">
+          <xs:annotation>
+            <xs:documentation>The name of the table containing the requested item.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="attributesToGets">
+          <xs:annotation>
+            <xs:documentation>This is a legacy parameter. Use ProjectionExpression instead.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="consistentRead">
+          <xs:annotation>
+            <xs:documentation>Determines the read consistency model: If set to true, then the operation uses strongly consistent reads; otherwise, the operation uses eventually consistent reads.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="expressionAttributeNames">
+          <xs:annotation>
+            <xs:documentation>One or more substitution tokens for attribute names in an expression. The following are some use cases for using ExpressionAttributeNames:</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="projectionExpression">
+          <xs:annotation>
+            <xs:documentation>A string that identifies one or more attributes to retrieve from the table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ReturnConsumedCapacityEnumType" use="optional" default="NONE" name="returnConsumedCapacity">
+          <xs:annotation>
+            <xs:documentation>Determines the level of detail about provisioned throughput consumption returned in the response.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ListTablesType" substitutionGroup="mule:abstract-operator" name="list-tables">
+    <xs:annotation>
+      <xs:documentation>Returns an array of table names associated with the current account and endpoint.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ListTablesType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="optional" name="exclusiveStartTableName">
+          <xs:annotation>
+            <xs:documentation>The first table name that this operation will evaluate. Use the value that was returned for LastEvaluatedTableName in a previous operation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionInt" use="optional" name="limit">
+          <xs:annotation>
+            <xs:documentation>A maximum number of table names to return. If this parameter is not specified, the limit is 100.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="PutItemType" substitutionGroup="mule:abstract-operator" name="put-item">
+    <xs:annotation>
+      <xs:documentation>Creates a new item, or replaces an old item with a new item. If an item that has the same primary key as the new item already exists in the specified table, the new item replaces the existing item.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PutItemType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element type="xs:string" minOccurs="0" maxOccurs="1" name="item">
+            <xs:annotation>
+              <xs:documentation>Item to be inserted.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName">
+          <xs:annotation>
+            <xs:documentation>Table name.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="QueryType" substitutionGroup="mule:abstract-operator" name="query">
+    <xs:annotation>
+      <xs:documentation>The Query operation finds items based on primary key values. You can query any table or secondary index that has a composite primary key (a partition key and a sort key).</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="QueryType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="key-conditions">
+            <xs:annotation>
+              <xs:documentation>This is a legacy parameter. Use KeyConditionExpression instead.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="key-condition">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-condition"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-names">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute-name">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-values">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute-value">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-attribute-value"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attributes-to-gets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attributes-to-get">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="exclusive-start-keys">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="exclusive-start-key">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-attribute-value"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="condition-filters">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="condition-filter">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-condition"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="optional" name="keyConditionExpression">
+          <xs:annotation>
+            <xs:documentation>The condition that specifies the key values for items to be retrieved by the Query action.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="keyConditions">
+          <xs:annotation>
+            <xs:documentation>This is a legacy parameter. Use KeyConditionExpression instead.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="scanIndexForward">
+          <xs:annotation>
+            <xs:documentation>Specifies the order for index traversal: If true (default), the traversal is performed in ascending order; if false, the traversal is performed in descending order.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.SelectEnumType" use="optional" name="select">
+          <xs:annotation>
+            <xs:documentation>The attributes to be returned in the result.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="attributeNames"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="attributeValues"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="attributesToGets"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ConditionalOperatorEnumType" use="optional" name="conditionalOperator"></xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="consistentRead"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="exclusiveStartKey"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="filterExpression"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="indexName"></xs:attribute>
+        <xs:attribute type="mule:expressionInt" use="optional" name="limit"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="projectionExpression"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="conditionFilter"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ReturnConsumedCapacityEnumType" use="optional" name="returnConsumedCapacity"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.AttributeValue" abstract="true" name="abstract-attribute-value"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-attribute-value" name="attribute-value">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.AttributeValue"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.AttributeValue">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="l">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-attribute-value"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="ms">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="m">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-attribute-value"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="ns">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="n">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="ss">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="s">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="optional" name="b"></xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" name="bool"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="bs"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="l"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="m"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="n"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="ns"></xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" name="nullvalue"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="s"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="ss"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.Condition">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-value-list">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-attribute-value"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionList" use="optional" name="attributeValueList"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ComparisonOperatorEnumType" use="optional" name="comparisonOperator"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.Condition" abstract="true" name="abstract-condition"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-condition" name="condition">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.Condition"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ScanType" substitutionGroup="mule:abstract-operator" name="scan">
+    <xs:annotation>
+      <xs:documentation>The Scan operation returns one or more items and item attributes by accessing every item in a table or secondary index. To have DynamoDB return fewer items, you can provide a FilterExpression operation.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ScanType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-names">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute-name">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-values">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute-value">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-attribute-value"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attributes-to-gets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attributes-to-get">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="exclusive-start-keys">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="exclusive-start-key">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-attribute-value"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="condition-filters">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="condition-filter">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-condition"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionInt" use="optional" name="segment">
+          <xs:annotation>
+            <xs:documentation>For a parallel Scan request, Segment identifies an individual segment to be scanned by an application worker.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.SelectEnumType" use="optional" name="select">
+          <xs:annotation>
+            <xs:documentation>The attributes to be returned in the result.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionInt" use="optional" name="totalSegments">
+          <xs:annotation>
+            <xs:documentation>For a parallel Scan request, TotalSegments represents the total number of segments into which the Scan operation is divided.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="attributeNames"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="attributeValues"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="attributesToGets"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ConditionalOperatorEnumType" use="optional" name="conditionalOperator"></xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="consistentRead"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="exclusiveStartKey"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="filterExpression"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="indexName"></xs:attribute>
+        <xs:attribute type="mule:expressionInt" use="optional" name="limit"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="projectionExpression"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="conditionFilter"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ReturnConsumedCapacityEnumType" use="optional" name="returnConsumedCapacity"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="UpdateItemType" substitutionGroup="mule:abstract-operator" name="update-item">
+    <xs:annotation>
+      <xs:documentation>Edits an existing item's attributes, or adds a new item to the table if it does not already exist.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UpdateItemType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element type="xs:string" minOccurs="0" maxOccurs="1" name="key">
+            <xs:annotation>
+              <xs:documentation>Primary key.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-updates">
+            <xs:annotation>
+              <xs:documentation>This is a legacy parameter. Use updateExpression instead.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute-update">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-attribute-value-update"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="expecteds">
+            <xs:annotation>
+              <xs:documentation>This is a legacy parameter. Use conditionExpression instead.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="expected">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-expected-attribute-value"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-names">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute-name">
+                  <xs:complexType>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="mule:expressionString" use="required" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-values">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute-value">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="1">
+                      <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="1" ref="dynamodb:abstract-attribute-value"></xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="mule:expressionString" use="required" name="key"></xs:attribute>
+                    <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName">
+          <xs:annotation>
+            <xs:documentation>Table name.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ReturnConsumedCapacityEnumType" use="optional" name="returnConsumedCapacity">
+          <xs:annotation>
+            <xs:documentation>Determines the level of detail about provisioned throughput consumption that is returned in the response.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ReturnItemCollectionMetricsEnumType" use="optional" name="returnItemCollectionMetrics">
+          <xs:annotation>
+            <xs:documentation>Determines whether item collection metrics are returned.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ReturnValueEnumType" use="optional" name="returnValues">
+          <xs:annotation>
+            <xs:documentation>Use if you want to get the item attributes as they appear before or after they are updated.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="updateExpression">
+          <xs:annotation>
+            <xs:documentation>An expression that defines one or more attributes to be updated, the action to be performed on them, and new value(s) for them.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="attributeUpdates">
+          <xs:annotation>
+            <xs:documentation>This is a legacy parameter. Use updateExpression instead.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="expected">
+          <xs:annotation>
+            <xs:documentation>This is a legacy parameter. Use conditionExpression instead.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ConditionalOperatorEnumType" use="optional" name="conditionalOperator"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="conditionExpression"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="attributeNames"></xs:attribute>
+        <xs:attribute type="mule:expressionMap" use="optional" name="attributeValues"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.AttributeValueUpdate">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="value">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.AttributeValue"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.AttributeActionEnumType" use="optional" name="action"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.AttributeValueUpdate" abstract="true" name="abstract-attribute-value-update"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-attribute-value-update" name="attribute-value-update">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.AttributeValueUpdate"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.ExpectedAttributeValue">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-value-list">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-attribute-value"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="value">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.AttributeValue"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionList" use="optional" name="attributeValueList"></xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.ComparisonOperatorEnumType" use="optional" name="comparisonOperator"></xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" name="exists"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="value"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.ExpectedAttributeValue" abstract="true" name="abstract-expected-attribute-value"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-expected-attribute-value" name="expected-attribute-value">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.ExpectedAttributeValue"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="UpdateTableType" substitutionGroup="mule:abstract-operator" name="update-table">
+    <xs:annotation>
+      <xs:documentation>Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UpdateTableType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="attribute-definitions">
+            <xs:annotation>
+              <xs:documentation>An array of attributes that describe the key schema for the table and indexes. If you are adding a new global secondary index to the table, AttributeDefinitions must include the key elements of the new index.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-attribute-definition"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="global-secondary-index-updates">
+            <xs:annotation>
+              <xs:documentation>An array of one or more global secondary indexes for the table.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-global-secondary-index-update"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="tableName">
+          <xs:annotation>
+            <xs:documentation>The name of the table to update.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="attributeDefinitions">
+          <xs:annotation>
+            <xs:documentation>An array of attributes that describe the key schema for the table and indexes. If you are adding a new global secondary index to the table, AttributeDefinitions must include the key elements of the new index.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionLong" use="optional" name="readCapacityUnits">
+          <xs:annotation>
+            <xs:documentation>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionLong" use="optional" name="writeCapacityUnits">
+          <xs:annotation>
+            <xs:documentation>The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="globalSecondaryIndexUpdates">
+          <xs:annotation>
+            <xs:documentation>An array of one or more global secondary indexes for the table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/dynamodb" type="org.mule.extension.dynamodb.api.model.StreamViewTypeEnumType" use="optional" name="streamViewType">
+          <xs:annotation>
+            <xs:documentation>When an item in the table is modified, StreamViewType determines what information is written to the stream for this table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="streamEnabled">
+          <xs:annotation>
+            <xs:documentation>Indicates whether DynamoDB Streams is enabled (true) or disabled (false) on the table.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.CreateGlobalSecondaryIndexAction">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="key-schema">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" minOccurs="0" maxOccurs="unbounded" ref="dynamodb:abstract-key-schema-element"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="projection">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.Projection"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="provisioned-throughput">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.ProvisionedThroughput"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="optional" name="indexName"></xs:attribute>
+        <xs:attribute type="mule:expressionList" use="optional" name="keySchema"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="projection"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="provisionedThroughput"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.UpdateGlobalSecondaryIndexAction">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="provisioned-throughput">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.ProvisionedThroughput"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="optional" name="indexName"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="provisionedThroughput"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="org.mule.extension.dynamodb.api.model.GlobalSecondaryIndexUpdate">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" name="create">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.CreateGlobalSecondaryIndexAction"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="update">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" base="dynamodb:org.mule.extension.dynamodb.api.model.UpdateGlobalSecondaryIndexAction"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="optional" name="create"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="delete"></xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="update"></xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" type="dynamodb:org.mule.extension.dynamodb.api.model.GlobalSecondaryIndexUpdate" abstract="true" name="abstract-global-secondary-index-update"></xs:element>
+  <xs:element xmlns:dynamodb="http://www.mulesoft.org/schema/mule/dynamodb" substitutionGroup="dynamodb:abstract-global-secondary-index-update" name="global-secondary-index-update">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="dynamodb:org.mule.extension.dynamodb.api.model.GlobalSecondaryIndexUpdate"></xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstract-shared-extension" name="streams-config">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractExtensionType">
+          <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="1" maxOccurs="1" ref="mule:abstractConnectionProvider"></xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" ref="mule:expiration-policy"></xs:element>
+          </xs:sequence>
+          <xs:attribute type="xs:string" use="required" name="name">
+            <xs:annotation>
+              <xs:documentation>The identifier of this element used to reference it in other components</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstractConnectionProvider" name="streams-connection">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractConnectionProviderType">
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" ref="mule:reconnection"></xs:element>
+            <xs:element xmlns:tls="http://www.mulesoft.org/schema/mule/tls" minOccurs="0" maxOccurs="1" ref="tls:context"></xs:element>
+          </xs:sequence>
+          <xs:attribute type="xs:string" use="optional" name="tlsContext"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="sessionToken"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" default="50000" name="connectionTimeout"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" name="maxConnections"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" default="50000" name="socketTimeout"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="required" name="accessKey"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="required" name="secretKey"></xs:attribute>
+          <xs:attribute type="mule:expressionBoolean" use="optional" default="false" name="tryDefaultAWSCredentialsProviderChain"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" default="US_EAST_1" name="region"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyHost"></xs:attribute>
+          <xs:attribute type="mule:expressionInt" use="optional" name="proxyPort"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyUsername"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyPassword"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyDomain"></xs:attribute>
+          <xs:attribute type="mule:expressionString" use="optional" name="proxyWorkstation"></xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="DescribeStreamType" substitutionGroup="mule:abstract-operator" name="describe-stream"></xs:element>
+  <xs:complexType name="DescribeStreamType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="streamARN"></xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetRecordsType" substitutionGroup="mule:abstract-operator" name="get-records"></xs:element>
+  <xs:complexType name="GetRecordsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-object-streaming-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="shardIterator"></xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetShardIteratorType" substitutionGroup="mule:abstract-operator" name="get-shard-iterator"></xs:element>
+  <xs:complexType name="GetShardIteratorType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="required" name="shardId"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="required" name="shardIteratorType"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" name="startingSequenceNumber"></xs:attribute>
+        <xs:attribute type="mule:expressionString" use="required" name="streamARN"></xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/dynamodb" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ListStreamsType" substitutionGroup="mule:abstract-operator" name="list-streams"></xs:element>
+  <xs:complexType name="ListStreamsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractOperatorType">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-object-streaming-strategy"></xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" ref="mule:abstract-reconnection-strategy"></xs:element>
+        </xs:sequence>
+        <xs:attribute type="mule:expressionString" use="optional" name="tableName"></xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>The name of the configuration to be used to execute this component</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="target">
+          <xs:annotation>
+            <xs:documentation>The name of a variable on which the operation's output will be placed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="mule:expressionString" use="optional" default="#[payload]" name="targetValue">
+          <xs:annotation>
+            <xs:documentation>An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.ReturnConsumedCapacityEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="INDEXES"></xs:enumeration>
+          <xs:enumeration value="TOTAL"></xs:enumeration>
+          <xs:enumeration value="NONE"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.ScalarAttributeTypeEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="STRING"></xs:enumeration>
+          <xs:enumeration value="NUMBER"></xs:enumeration>
+          <xs:enumeration value="BINARY"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.KeyTypeEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="HASH"></xs:enumeration>
+          <xs:enumeration value="RANGE"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.ProjectionTypeEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ALL"></xs:enumeration>
+          <xs:enumeration value="KEYS_ONLY"></xs:enumeration>
+          <xs:enumeration value="INCLUDE"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.StreamViewTypeEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NEW_IMAGE"></xs:enumeration>
+          <xs:enumeration value="OLD_IMAGE"></xs:enumeration>
+          <xs:enumeration value="NEW_AND_OLD_IMAGES"></xs:enumeration>
+          <xs:enumeration value="KEYS_ONLY"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.ComparisonOperatorEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="EQ"></xs:enumeration>
+          <xs:enumeration value="NE"></xs:enumeration>
+          <xs:enumeration value="IN"></xs:enumeration>
+          <xs:enumeration value="LE"></xs:enumeration>
+          <xs:enumeration value="LT"></xs:enumeration>
+          <xs:enumeration value="GE"></xs:enumeration>
+          <xs:enumeration value="GT"></xs:enumeration>
+          <xs:enumeration value="BETWEEN"></xs:enumeration>
+          <xs:enumeration value="NOT_NULL"></xs:enumeration>
+          <xs:enumeration value="NULL"></xs:enumeration>
+          <xs:enumeration value="CONTAINS"></xs:enumeration>
+          <xs:enumeration value="NOT_CONTAINS"></xs:enumeration>
+          <xs:enumeration value="BEGINS_WITH"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.SelectEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ALL_ATTRIBUTES"></xs:enumeration>
+          <xs:enumeration value="ALL_PROJECTED_ATTRIBUTES"></xs:enumeration>
+          <xs:enumeration value="SPECIFIC_ATTRIBUTES"></xs:enumeration>
+          <xs:enumeration value="COUNT"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.ConditionalOperatorEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="AND"></xs:enumeration>
+          <xs:enumeration value="OR"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.ReturnItemCollectionMetricsEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="SIZE"></xs:enumeration>
+          <xs:enumeration value="NONE"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.ReturnValueEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NONE"></xs:enumeration>
+          <xs:enumeration value="ALL_OLD"></xs:enumeration>
+          <xs:enumeration value="UPDATED_OLD"></xs:enumeration>
+          <xs:enumeration value="ALL_NEW"></xs:enumeration>
+          <xs:enumeration value="UPDATED_NEW"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="org.mule.extension.dynamodb.api.model.AttributeActionEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ADD"></xs:enumeration>
+          <xs:enumeration value="PUT"></xs:enumeration>
+          <xs:enumeration value="DELETE"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+</xs:schema>

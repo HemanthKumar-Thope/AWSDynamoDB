@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="dynamo_db-test-suite.xml" />
+	<munit:before-test name="dynamo_db-test-suiteBefore_Test" doc:id="4ba040e3-596b-4258-ace0-08cd69b0fb03" >
+		<munit:set-event doc:name="Set Event" doc:id="27dd5ce4-481f-4270-8501-a358afbd5383">
+				<munit:attributes value="#[{
+'queryParams':{
+'keyName':'ProductCatalog'
+}
+}]" />
+				<munit:variables>
+					<munit:variable key="keyName" value='"ProductCatalog"' />
+				</munit:variables>
+			</munit:set-event>
+	</munit:before-test>
+	<munit:test name="dynamo_db-test-suite-dynamo_dbFlow1Test1" doc:id="8a10a109-dcf9-489d-bd39-96a3f6c3e123" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to dynamo_dbFlow1" doc:id="51a03f08-3060-4b0b-993c-c80f6cbec962" name="dynamo_dbFlow1"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Check if its null or not " doc:id="3ce70bab-98fc-4f58-a77b-b54d57cc039e" is="#[MunitTools::notNullValue()]" expression="#[payload]" message='"There is no queryParam"' />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

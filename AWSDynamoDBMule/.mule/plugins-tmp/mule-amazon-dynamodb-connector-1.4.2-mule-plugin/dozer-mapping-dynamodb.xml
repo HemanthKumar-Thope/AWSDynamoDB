@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://dozer.sourceforge.net"
+          xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+
+    <configuration>
+        <custom-converters>
+            <converter type="org.mule.extension.dynamodb.internal.util.AttributeValueMapDozerConverter">
+                <class-a>java.util.HashMap</class-a>
+                <class-b>java.util.HashMap</class-b>
+            </converter>
+            <converter type="org.mule.extension.dynamodb.internal.util.ScalarAttributeTypeToStringDozerConverter">
+                <class-a>org.mule.extension.dynamodb.api.model.ScalarAttributeType</class-a>
+                <class-b>java.lang.String</class-b>
+            </converter>
+            <converter type="org.mule.extension.dynamodb.internal.util.ScalarAttributeTypeDozerConverter">
+                <class-a>org.mule.extension.dynamodb.api.model.ScalarAttributeType</class-a>
+                <class-b>com.amazonaws.services.dynamodbv2.model.ScalarAttributeType</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+
+    <mapping wildcard="true">
+        <class-a>org.mule.extension.dynamodb.api.model.AttributeValue</class-a>
+        <class-b>com.amazonaws.services.dynamodbv2.model.AttributeValue</class-b>
+
+        <field custom-converter="org.mule.extension.dynamodb.internal.util.AttributeValueMapDozerConverter">
+            <a>m</a>
+            <b>m</b>
+
+            <a-hint>java.util.HashMap</a-hint>
+            <b-hint>java.util.HashMap</b-hint>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.amazonaws.services.dynamodbv2.model.AttributeDefinition</class-a>
+        <class-b>org.mule.extension.dynamodb.api.model.AttributeDefinition</class-b>
+    </mapping>
+    <mapping>
+        <class-a>com.amazonaws.services.dynamodbv2.model.TableDescription</class-a>
+        <class-b>org.mule.extension.dynamodb.api.model.TableDescription</class-b>
+        <field-exclude>
+            <a>creationDateTime</a>
+            <b>creationDateTime</b>
+        </field-exclude>
+    </mapping>
+    <mapping>
+        <class-a>com.amazonaws.services.dynamodbv2.model.ProvisionedThroughputDescription</class-a>
+        <class-b>org.mule.extension.dynamodb.api.model.ProvisionedThroughputDescription</class-b>
+        <field-exclude>
+            <a>lastIncreaseDateTime</a>
+            <b>lastIncreaseDateTime</b>
+        </field-exclude>
+        <field-exclude>
+            <a>lastDecreaseDateTime</a>
+            <b>lastDecreaseDateTime</b>
+        </field-exclude>
+    </mapping>
+    <mapping>
+        <class-a>com.amazonaws.services.dynamodbv2.model.StreamDescription</class-a>
+        <class-b>org.mule.extension.dynamodb.api.model.StreamDescription</class-b>
+        <field-exclude>
+            <a>creationRequestDateTime</a>
+            <b>creationRequestDateTime</b>
+        </field-exclude>
+    </mapping>
+    <mapping>
+        <class-a>com.amazonaws.services.dynamodbv2.model.StreamRecord</class-a>
+        <class-b>org.mule.extension.dynamodb.api.model.StreamRecord</class-b>
+        <field-exclude>
+            <a>approximateCreationDateTime</a>
+            <b>approximateCreationDateTime</b>
+        </field-exclude>
+    </mapping>
+</mappings>
